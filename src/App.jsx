@@ -30,35 +30,8 @@ const DEPARTMENTS = [
 // nommées correctement. Tant qu'une image est absente, l'icône du
 // département s'affiche à la place. Remplacez "Prix sur demande" par vos
 // vrais prix quand vous êtes prêt.
-const PRODUCTS = [
-  { id: 1, dept: "vetements", name: "T-shirt Étoilé Brodé", material: "Coton, broderies étoilées", price: "Prix sur demande", image: "/images/tshirt-etoile-brode.webp", sizes: ["S", "M", "L", "XL"] },
-  { id: 2, dept: "vetements", name: "T-shirt Essentiel Noir", material: "Coton stretch", price: "Prix sur demande", image: "/images/tshirt-essentiel-noir.webp", sizes: ["S", "M", "L", "XL"] },
-  { id: 3, dept: "vetements", name: "Manteau Ellipse", material: "Laine vierge", price: "Prix sur demande", image: "/images/manteau-ellipse.webp", sizes: ["S", "M", "L", "XL"] },
-  { id: 4, dept: "vetements", name: "Robe Éclat", material: "Soie lavée", price: "Prix sur demande", image: "/images/robe-eclat.webp", sizes: ["S", "M", "L", "XL"] },
-
-  { id: 5, dept: "accessoires", name: "Ceinture Facette", material: "Cuir pleine fleur", price: "Prix sur demande", image: "/images/ceinture-facette.webp" },
-  { id: 6, dept: "accessoires", name: "Foulard Ondine", material: "Twill de soie", price: "Prix sur demande", image: "/images/foulard-ondine.webp" },
-  { id: 7, dept: "accessoires", name: "Caleçon", material: "Coton stretch, lot de 3", price: "Prix sur demande", image: "/images/calecon.webp" },
-
-  { id: 8, dept: "parfums", name: "Eau Fraîche Française", material: "100 ml, eau de parfum", price: "Prix sur demande", image: "/images/parfum-ete-francais.webp" },
-  { id: 9, dept: "parfums", name: "Déodorant Sensitive 0%", material: "Spray 150 ml, soin corporel", price: "Prix sur demande", image: "/images/deodorant-sensitive.webp" },
-  { id: 10, dept: "parfums", name: "Déodorant Fraîcheur Fleurie", material: "Spray 150 ml, soin corporel", price: "Prix sur demande", image: "/images/deodorant-fraicheur.webp" },
-  { id: 11, dept: "parfums", name: "Eau Nocturne", material: "Eau de parfum", price: "Prix sur demande", image: "/images/eau-nocturne.webp" },
-
-  { id: 12, dept: "montres", name: "Montre Argent Ligne Pure", material: "Boîtier acier, bracelet maillons", price: "Prix sur demande", image: "/images/montre-argent-pure.webp" },
-  { id: 13, dept: "montres", name: "Montre Filet Noir Duo", material: "Coffret duo, bracelet maille milanaise", price: "Prix sur demande", image: "/images/montre-filet-duo.webp" },
-  { id: 14, dept: "montres", name: "Montre Or Élégance", material: "Boîtier plaqué or, chronographe", price: "Prix sur demande", image: "/images/montre-or-elegance.webp" },
-  { id: 15, dept: "montres", name: "Montre Chrono Argenté", material: "Cadran blanc, chronographe acier", price: "Prix sur demande", image: "/images/montre-chrono-argente.webp" },
-  { id: 16, dept: "montres", name: "Montre Bleu Minéral", material: "Cadran bleu, bracelet cuir", price: "Prix sur demande", image: "/images/montre-bleu-mineral.webp" },
-
-  { id: 17, dept: "chaussures", name: "Derby Cuir Patiné", material: "Cuir patiné, semelle cousue", price: "Prix sur demande", image: "/images/derby-patine.webp", sizes: ["39", "40", "41", "42", "43", "44", "45"] },
-  { id: 18, dept: "chaussures", name: "Mocassin Lisière", material: "Veau velours", price: "340 €", image: "/images/mocassin-lisiere.webp", sizes: ["39", "40", "41", "42", "43", "44", "45"] },
-  { id: 19, dept: "chaussures", name: "Bottine Traverse", material: "Cuir ciré", price: "420 €", image: "/images/bottine-traverse.webp", sizes: ["39", "40", "41", "42", "43", "44", "45"] },
-
-  { id: 20, dept: "lunettes", name: "Lunettes Horizon", material: "Acétate écaille", price: "260 €", image: "/images/lunettes-horizon.webp" },
-  { id: 21, dept: "lunettes", name: "Solaire Fadilou", material: "Verres dégradés", price: "Prix sur demande", image: "/images/solaire-fadilou.webp" },
-  { id: 22, dept: "lunettes", name: "Lunettes Fil", material: "Monture dorée, verres teintés", price: "Prix sur demande", image: "/images/lunettes-fil.webp" },
-];
+// Le catalogue vit maintenant dans /public/data/products.json — modifiable
+// depuis l'interface d'administration (/admin) sans toucher au code.
 
 function deptOf(id) {
   return DEPARTMENTS.find((d) => d.id === id);
@@ -115,12 +88,22 @@ function Reveal({ children, delay = 0, as: Tag = "div", style, className = "" })
 }
 
 export default function ElFadilouShop() {
+  const [products, setProducts] = useState([]);
+  const [productsLoaded, setProductsLoaded] = useState(false);
   const [active, setActive] = useState("tous");
   const [selected, setSelected] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const [subscribed, setSubscribed] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const heroRef = useRef(null);
+
+  useEffect(() => {
+    fetch("/data/products.json")
+      .then((res) => res.json())
+      .then((data) => setProducts(data.products || []))
+      .catch(() => setProducts([]))
+      .finally(() => setProductsLoaded(true));
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = selected ? "hidden" : "";
@@ -147,7 +130,7 @@ export default function ElFadilouShop() {
     el.style.setProperty("--my", `${y}%`);
   }, []);
 
-  const visible = active === "tous" ? PRODUCTS : PRODUCTS.filter((p) => p.dept === active);
+  const visible = active === "tous" ? products : products.filter((p) => p.dept === active);
 
   const scrollToCatalogue = () => {
     document.getElementById("catalogue")?.scrollIntoView({ behavior: "smooth" });
@@ -159,7 +142,7 @@ export default function ElFadilouShop() {
 
       {/* HEADER */}
       <header style={{ ...styles.header, ...(scrolled ? styles.headerScrolled : {}) }}>
-        <div style={styles.headerInner}>
+        <div style={styles.headerInner} className="mer-header-inner">
           <span style={styles.logo}>NDACK FADILOU SHOP</span>
           <nav style={styles.nav} className="mer-nav-hide">
             <a href="#catalogue" style={styles.navLink} className="mer-link mer-underline">Catalogue</a>
@@ -193,7 +176,7 @@ export default function ElFadilouShop() {
       </section>
 
       {/* DEPARTMENT INDEX */}
-      <section style={styles.indexSection}>
+      <section style={styles.indexSection} className="mer-index-section">
         <Reveal as="p" style={styles.sectionEyebrow}>Répertoire des départements</Reveal>
         <div style={styles.indexStrip} className="mer-scrollbar">
           <button
@@ -227,7 +210,7 @@ export default function ElFadilouShop() {
       </section>
 
       {/* CATALOGUE */}
-      <section id="catalogue" style={styles.catalogue}>
+      <section id="catalogue" style={styles.catalogue} className="mer-catalogue">
         <div style={styles.catalogueHeadRow}>
           <h2 style={styles.catalogueTitle}>
             {active === "tous" ? "Le catalogue" : deptOf(active)?.label}
@@ -237,37 +220,47 @@ export default function ElFadilouShop() {
           </span>
         </div>
 
-        <div style={styles.grid}>
-          {visible.map((p, i) => {
-            const d = deptOf(p.dept);
-            const IconEl = d.Icon;
-            return (
-              <Reveal key={p.id} as="button" delay={(i % 6) * 70} className="mer-card" style={styles.card}>
-                <span onClick={() => setSelected(p)} style={styles.cardClickable} className="mer-card-click">
-                  <span style={styles.cardSwatch} className="mer-card-swatch">
-                    <span style={styles.cardSwatchLines} />
-                    <ProductImage src={p.image} alt={p.name} IconEl={IconEl} iconSize={30} />
-                    <span style={styles.cardOverlay} className="mer-card-overlay">
-                      Voir la pièce <ArrowRight size={13} strokeWidth={1.5} />
+        {!productsLoaded && (
+          <p style={styles.catalogueStatus}>Chargement du catalogue…</p>
+        )}
+
+        {productsLoaded && visible.length === 0 && (
+          <p style={styles.catalogueStatus}>Aucune pièce dans ce rayon pour le moment.</p>
+        )}
+
+        {productsLoaded && visible.length > 0 && (
+          <div style={styles.grid}>
+            {visible.map((p, i) => {
+              const d = deptOf(p.dept);
+              const IconEl = d.Icon;
+              return (
+                <Reveal key={p.id ?? `${p.dept}-${p.name}-${i}`} as="button" delay={(i % 6) * 70} className="mer-card" style={styles.card}>
+                  <span onClick={() => setSelected(p)} style={styles.cardClickable} className="mer-card-click">
+                    <span style={styles.cardSwatch} className="mer-card-swatch">
+                      <span style={styles.cardSwatchLines} />
+                      <ProductImage src={p.image} alt={p.name} IconEl={IconEl} iconSize={30} />
+                      <span style={styles.cardOverlay} className="mer-card-overlay">
+                        Voir la pièce <ArrowRight size={13} strokeWidth={1.5} />
+                      </span>
+                    </span>
+                    <span style={styles.cardBody}>
+                      <span style={styles.cardEyebrow}>{d.num} · {d.label}</span>
+                      <span style={styles.cardName} className="mer-card-name">{p.name}</span>
+                      <span style={styles.cardFoot}>
+                        <span style={styles.cardMaterial}>{p.material}</span>
+                        <span style={styles.cardPrice} className="mer-card-price">{p.price}</span>
+                      </span>
                     </span>
                   </span>
-                  <span style={styles.cardBody}>
-                    <span style={styles.cardEyebrow}>{d.num} · {d.label}</span>
-                    <span style={styles.cardName} className="mer-card-name">{p.name}</span>
-                    <span style={styles.cardFoot}>
-                      <span style={styles.cardMaterial}>{p.material}</span>
-                      <span style={styles.cardPrice} className="mer-card-price">{p.price}</span>
-                    </span>
-                  </span>
-                </span>
-              </Reveal>
-            );
-          })}
-        </div>
+                </Reveal>
+              );
+            })}
+          </div>
+        )}
       </section>
 
       {/* MANIFESTO */}
-      <section id="maison" style={styles.manifesto}>
+      <section id="maison" style={styles.manifesto} className="mer-manifesto">
         <Reveal>
           <p style={styles.manifestoQuote}>
             « Nous ne vendons pas des objets.<br />Nous composons une allure. »
@@ -285,8 +278,8 @@ export default function ElFadilouShop() {
       </section>
 
       {/* FOOTER / CONTACT */}
-      <footer id="contact" style={styles.footer}>
-        <div style={styles.footerGrid}>
+      <footer id="contact" style={styles.footer} className="mer-footer">
+        <div style={styles.footerGrid} className="mer-footer-grid">
           <div>
             <p style={styles.logo}>NDACK FADILOU SHOP</p>
             <p style={styles.footerText}>
@@ -351,7 +344,7 @@ export default function ElFadilouShop() {
       {/* PRODUCT MODAL */}
       {selected && (
         <div style={styles.overlay} onClick={() => setSelected(null)} className="mer-overlay-in">
-          <div style={styles.modal} onClick={(e) => e.stopPropagation()} className="mer-modal-in">
+          <div style={styles.modal} onClick={(e) => e.stopPropagation()} className="mer-modal-in mer-modal">
             <button onClick={() => setSelected(null)} style={styles.modalClose} aria-label="Fermer" className="mer-icon-bounce">
               <X size={18} strokeWidth={1.5} />
             </button>
@@ -559,6 +552,16 @@ const css = `
   }
   @media (max-width: 720px) {
     .mer-nav-hide { display: none !important; }
+    .mer-footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+    .mer-hero { padding: 72px 20px 64px !important; }
+    .mer-header-inner { padding: 14px 20px !important; }
+    .mer-catalogue { padding: 16px 20px 64px !important; }
+    .mer-index-section { padding: 32px 20px 4px !important; }
+    .mer-manifesto { padding: 56px 20px !important; }
+    .mer-footer { padding: 48px 20px 24px !important; }
+    .mer-icon-bounce { padding: 6px; margin: -6px; }
+    .mer-fab { right: 16px !important; bottom: 16px !important; width: 52px !important; height: 52px !important; }
+    .mer-modal { padding: 28px 22px !important; }
   }
   @media (prefers-reduced-motion: reduce) {
     .mer-reveal, .mer-drift-a, .mer-drift-b, .mer-scroll-cue span, .mer-card, .mer-cta::before, .mer-fab-pulse { animation: none !important; transition: none !important; }
@@ -724,6 +727,7 @@ const styles = {
   },
   catalogueTitle: { fontFamily: serif, fontWeight: 300, fontSize: 30, margin: 0 },
   catalogueCount: { fontFamily: mono, fontSize: 12, color: colors.muted },
+  catalogueStatus: { fontSize: 14, color: colors.muted, padding: "24px 0" },
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
