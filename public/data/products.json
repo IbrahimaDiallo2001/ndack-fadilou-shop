@@ -241,6 +241,13 @@
       "price": "15 000 FCFA",
       "image": "/images/lunettes-fil.webp",
       "sizes": []
+    },
+    {
+      "image": "/images/oip-6-.webp",
+      "price": "A partir de 7 000 FCFA",
+      "name": "Collections Maillots",
+      "dept": "vetements",
+      "material": "Original Maillots"
     }
   ]
 }
