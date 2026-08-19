@@ -1,31 +1,246 @@
 {
   "products": [
-    { "id": 1, "dept": "vetements", "name": "T-shirt Étoilé Brodé", "material": "Coton, broderies étoilées", "price": "Prix sur demande", "image": "/images/tshirt-etoile-brode.webp", "sizes": ["S", "M", "L", "XL"] },
-    { "id": 2, "dept": "vetements", "name": "T-shirt Essentiel Noir", "material": "Coton stretch", "price": "Prix sur demande", "image": "/images/tshirt-essentiel-noir.webp", "sizes": ["S", "M", "L", "XL"] },
-    { "id": 3, "dept": "vetements", "name": "Manteau Ellipse", "material": "Laine vierge", "price": "Prix sur demande", "image": "/images/manteau-ellipse.webp", "sizes": ["S", "M", "L", "XL"] },
-    { "id": 4, "dept": "vetements", "name": "Robe Éclat", "material": "Soie lavée", "price": "Prix sur demande", "image": "/images/robe-eclat.webp", "sizes": ["S", "M", "L", "XL"] },
-
-    { "id": 5, "dept": "accessoires", "name": "Ceinture Facette", "material": "Cuir pleine fleur", "price": "Prix sur demande", "image": "/images/ceinture-facette.webp", "sizes": [] },
-    { "id": 6, "dept": "accessoires", "name": "Foulard Ondine", "material": "Twill de soie", "price": "Prix sur demande", "image": "/images/foulard-ondine.webp", "sizes": [] },
-    { "id": 7, "dept": "accessoires", "name": "Caleçon", "material": "Coton stretch, lot de 3", "price": "Prix sur demande", "image": "/images/calecon.webp", "sizes": [] },
-
-    { "id": 8, "dept": "parfums", "name": "Eau Fraîche Française", "material": "100 ml, eau de parfum", "price": "Prix sur demande", "image": "/images/parfum-ete-francais.webp", "sizes": [] },
-    { "id": 9, "dept": "parfums", "name": "Déodorant Sensitive 0%", "material": "Spray 150 ml, soin corporel", "price": "Prix sur demande", "image": "/images/deodorant-sensitive.webp", "sizes": [] },
-    { "id": 10, "dept": "parfums", "name": "Déodorant Fraîcheur Fleurie", "material": "Spray 150 ml, soin corporel", "price": "Prix sur demande", "image": "/images/deodorant-fraicheur.webp", "sizes": [] },
-    { "id": 11, "dept": "parfums", "name": "Eau Nocturne", "material": "Eau de parfum", "price": "Prix sur demande", "image": "/images/eau-nocturne.webp", "sizes": [] },
-
-    { "id": 12, "dept": "montres", "name": "Montre Argent Ligne Pure", "material": "Boîtier acier, bracelet maillons", "price": "Prix sur demande", "image": "/images/montre-argent-pure.webp", "sizes": [] },
-    { "id": 13, "dept": "montres", "name": "Montre Filet Noir Duo", "material": "Coffret duo, bracelet maille milanaise", "price": "Prix sur demande", "image": "/images/montre-filet-duo.webp", "sizes": [] },
-    { "id": 14, "dept": "montres", "name": "Montre Or Élégance", "material": "Boîtier plaqué or, chronographe", "price": "Prix sur demande", "image": "/images/montre-or-elegance.webp", "sizes": [] },
-    { "id": 15, "dept": "montres", "name": "Montre Chrono Argenté", "material": "Cadran blanc, chronographe acier", "price": "Prix sur demande", "image": "/images/montre-chrono-argente.webp", "sizes": [] },
-    { "id": 16, "dept": "montres", "name": "Montre Bleu Minéral", "material": "Cadran bleu, bracelet cuir", "price": "Prix sur demande", "image": "/images/montre-bleu-mineral.webp", "sizes": [] },
-
-    { "id": 17, "dept": "chaussures", "name": "Derby Cuir Patiné", "material": "Cuir patiné, semelle cousue", "price": "Prix sur demande", "image": "/images/derby-patine.webp", "sizes": ["39", "40", "41", "42", "43", "44", "45"] },
-    { "id": 18, "dept": "chaussures", "name": "Mocassin Lisière", "material": "Veau velours", "price": "340 €", "image": "/images/mocassin-lisiere.webp", "sizes": ["39", "40", "41", "42", "43", "44", "45"] },
-    { "id": 19, "dept": "chaussures", "name": "Bottine Traverse", "material": "Cuir ciré", "price": "420 €", "image": "/images/bottine-traverse.webp", "sizes": ["39", "40", "41", "42", "43", "44", "45"] },
-
-    { "id": 20, "dept": "lunettes", "name": "Lunettes Horizon", "material": "Acétate écaille", "price": "260 €", "image": "/images/lunettes-horizon.webp", "sizes": [] },
-    { "id": 21, "dept": "lunettes", "name": "Solaire Fadilou", "material": "Verres dégradés", "price": "Prix sur demande", "image": "/images/solaire-fadilou.webp", "sizes": [] },
-    { "id": 22, "dept": "lunettes", "name": "Lunettes Fil", "material": "Monture dorée, verres teintés", "price": "Prix sur demande", "image": "/images/lunettes-fil.webp", "sizes": [] }
+    {
+      "id": 1,
+      "dept": "vetements",
+      "name": "T-shirt Étoilé Brodé",
+      "material": "Coton, broderies étoilées",
+      "price": "7 000 FCFA",
+      "image": "/images/tshirt-etoile-brode.webp",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ]
+    },
+    {
+      "id": 2,
+      "dept": "vetements",
+      "name": "T-shirt Essentiel Noir",
+      "material": "Coton stretch",
+      "price": "3 000 FCFA",
+      "image": "/images/tshirt-essentiel-noir.webp",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ]
+    },
+    {
+      "id": 3,
+      "dept": "vetements",
+      "name": "Manteau Ellipse",
+      "material": "Laine vierge",
+      "price": "Prix sur demande",
+      "image": "/images/manteau-ellipse.webp",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ]
+    },
+    {
+      "id": 4,
+      "dept": "vetements",
+      "name": "Robe Éclat",
+      "material": "Soie lavée",
+      "price": "Prix sur demande",
+      "image": "/images/robe-eclat.webp",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ]
+    },
+    {
+      "id": 5,
+      "dept": "accessoires",
+      "name": "Ceinture Facette",
+      "material": "Cuir pleine fleur",
+      "price": "Prix sur demande",
+      "image": "/images/ceinture-facette.webp",
+      "sizes": []
+    },
+    {
+      "id": 6,
+      "dept": "accessoires",
+      "name": "Foulard Ondine",
+      "material": "Twill de soie",
+      "price": "Prix sur demande",
+      "image": "/images/foulard-ondine.webp",
+      "sizes": []
+    },
+    {
+      "id": 7,
+      "dept": "accessoires",
+      "name": "Caleçon",
+      "material": "Coton stretch, lot de 3",
+      "price": "6 000 FCFA",
+      "image": "/images/calecon.webp",
+      "sizes": []
+    },
+    {
+      "id": 8,
+      "dept": "parfums",
+      "name": "Eau Fraîche Française",
+      "material": "100 ml, eau de parfum",
+      "price": "25 000 FCFA",
+      "image": "/images/parfum-ete-francais.webp",
+      "sizes": []
+    },
+    {
+      "id": 9,
+      "dept": "parfums",
+      "name": "Déodorant Sensitive 0%",
+      "material": "Spray 150 ml, soin corporel",
+      "price": "2 500 FCFA",
+      "image": "/images/deodorant-sensitive.webp",
+      "sizes": []
+    },
+    {
+      "id": 10,
+      "dept": "parfums",
+      "name": "Déodorant Fraîcheur Fleurie",
+      "material": "Spray 150 ml, soin corporel",
+      "price": "2 000 FCFA",
+      "image": "/images/deodorant-fraicheur.webp",
+      "sizes": []
+    },
+    {
+      "id": 11,
+      "dept": "parfums",
+      "name": "Eau Nocturne",
+      "material": "Eau de parfum",
+      "price": "25 000 FCFA",
+      "image": "/images/eau-nocturne.webp",
+      "sizes": []
+    },
+    {
+      "id": 12,
+      "dept": "montres",
+      "name": "Montre Argent Ligne Pure",
+      "material": "Boîtier acier, bracelet maillons",
+      "price": "15 000 FCFA",
+      "image": "/images/montre-argent-pure.webp",
+      "sizes": []
+    },
+    {
+      "id": 13,
+      "dept": "montres",
+      "name": "Montre Filet Noir Duo",
+      "material": "Coffret duo, bracelet maille milanaise",
+      "price": "10 000 FCFA",
+      "image": "/images/montre-filet-duo.webp",
+      "sizes": []
+    },
+    {
+      "id": 14,
+      "dept": "montres",
+      "name": "Montre Or Élégance",
+      "material": "Boîtier plaqué or, chronographe",
+      "price": "20 000 FCFA",
+      "image": "/images/montre-or-elegance.webp",
+      "sizes": []
+    },
+    {
+      "id": 15,
+      "dept": "montres",
+      "name": "Montre Chrono Argenté",
+      "material": "Cadran blanc, chronographe acier",
+      "price": "20 000 FCFA",
+      "image": "/images/montre-chrono-argente.webp",
+      "sizes": []
+    },
+    {
+      "id": 16,
+      "dept": "montres",
+      "name": "Montre Bleu Minéral",
+      "material": "Cadran bleu, bracelet cuir",
+      "price": "20 000 FCFA",
+      "image": "/images/montre-bleu-mineral.webp",
+      "sizes": []
+    },
+    {
+      "id": 17,
+      "dept": "chaussures",
+      "name": "Derby Cuir Patiné",
+      "material": "Cuir patiné, semelle cousue",
+      "price": "20 000 FCFA",
+      "image": "/images/derby-patine.webp",
+      "sizes": [
+        "39",
+        "40",
+        "41",
+        "42",
+        "43",
+        "44",
+        "45"
+      ]
+    },
+    {
+      "id": 18,
+      "dept": "chaussures",
+      "name": "Mocassin Lisière",
+      "material": "Veau velours",
+      "price": "25 000 FCFA",
+      "image": "/images/mocassin-lisiere.webp",
+      "sizes": [
+        "39",
+        "40",
+        "41",
+        "42",
+        "43",
+        "44",
+        "45"
+      ]
+    },
+    {
+      "id": 19,
+      "dept": "chaussures",
+      "name": "Bottine Traverse",
+      "material": "Cuir ciré",
+      "price": "15 000 FCFA",
+      "image": "/images/bottine-traverse.webp",
+      "sizes": [
+        "39",
+        "40",
+        "41",
+        "42",
+        "43",
+        "44",
+        "45"
+      ]
+    },
+    {
+      "id": 20,
+      "dept": "lunettes",
+      "name": "Lunettes Horizon",
+      "material": "Acétate écaille",
+      "price": "15 000 FCFA",
+      "image": "/images/lunettes-horizon.webp",
+      "sizes": []
+    },
+    {
+      "id": 21,
+      "dept": "lunettes",
+      "name": "Solaire Fadilou",
+      "material": "Verres dégradés",
+      "price": "10 000 FCFA",
+      "image": "/images/solaire-fadilou.webp",
+      "sizes": []
+    },
+    {
+      "id": 22,
+      "dept": "lunettes",
+      "name": "Lunettes Fil",
+      "material": "Monture dorée, verres teintés",
+      "price": "15 000 FCFA",
+      "image": "/images/lunettes-fil.webp",
+      "sizes": []
+    }
   ]
 }
