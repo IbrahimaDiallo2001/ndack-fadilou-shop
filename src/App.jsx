@@ -402,7 +402,9 @@ export default function ElFadilouShop() {
         </div>
         <div style={styles.footerBottom}>
           <span>© {new Date().getFullYear()} Ndack Fadilou Shop</span>
-          <span>Vitrine de démonstration — sans paiement en ligne</span>
+          <a href="/admin/" style={styles.footerAdminLink} className="mer-link">
+            Espace propriétaire
+          </a>
         </div>
       </footer>
 
@@ -991,6 +993,11 @@ const styles = {
     color: colors.muted,
     flexWrap: "wrap",
     gap: 8,
+  },
+  footerAdminLink: {
+    color: colors.muted,
+    textDecoration: "none",
+    fontSize: 11.5,
   },
   overlay: {
     position: "fixed",
