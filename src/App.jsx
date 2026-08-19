@@ -92,6 +92,10 @@ function Reveal({ children, delay = 0, as: Tag = "div", style, className = "" })
 export default function ElFadilouShop() {
   const [products, setProducts] = useState([]);
   const [productsLoaded, setProductsLoaded] = useState(false);
+  const [maillots, setMaillots] = useState([]);
+  const [showMaillots, setShowMaillots] = useState(false);
+  const [maillotSearch, setMaillotSearch] = useState("");
+  const [maillotVersion, setMaillotVersion] = useState("tous");
   const [active, setActive] = useState("tous");
   const [selected, setSelected] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -134,6 +138,11 @@ export default function ElFadilouShop() {
       .then((data) => setProducts(data.products || []))
       .catch(() => setProducts([]))
       .finally(() => setProductsLoaded(true));
+
+    fetch("/data/maillots.json")
+      .then((res) => res.json())
+      .then((data) => setMaillots(data.maillots || []))
+      .catch(() => setMaillots([]));
   }, []);
 
   useEffect(() => {
@@ -296,7 +305,11 @@ export default function ElFadilouShop() {
               const IconEl = d.Icon;
               return (
                 <Reveal key={p.id ?? `${p.dept}-${p.name}-${i}`} as="button" delay={(i % 6) * 70} className="mer-card" style={styles.card}>
-                  <span onClick={() => setSelected(p)} style={styles.cardClickable} className="mer-card-click">
+                  <span
+                    onClick={() => (p.isCollection ? setShowMaillots(true) : setSelected(p))}
+                    style={styles.cardClickable}
+                    className="mer-card-click"
+                  >
                     <span style={styles.cardSwatch} className="mer-card-swatch">
                       <span style={styles.cardSwatchLines} />
                       <ProductImage src={p.image} alt={p.name} IconEl={IconEl} iconSize={30} />
@@ -304,7 +317,7 @@ export default function ElFadilouShop() {
                         <span style={styles.availBadgeUnavailable}>Indisponible</span>
                       )}
                       <span style={styles.cardOverlay} className="mer-card-overlay">
-                        Voir la pièce <ArrowRight size={13} strokeWidth={1.5} />
+                        {p.isCollection ? "Voir la collection" : "Voir la pièce"} <ArrowRight size={13} strokeWidth={1.5} />
                       </span>
                     </span>
                     <span style={styles.cardBody}>
@@ -413,6 +426,99 @@ export default function ElFadilouShop() {
           </a>
         </div>
       </footer>
+
+      {/* MAILLOTS BROWSER */}
+      {showMaillots && (
+        <div
+          style={styles.overlay}
+          onClick={() => setShowMaillots(false)}
+          className="mer-overlay-in"
+        >
+          <div style={styles.maillotsPanel} onClick={(e) => e.stopPropagation()} className="mer-modal-in mer-modal">
+            <button
+              onClick={() => setShowMaillots(false)}
+              style={styles.modalClose}
+              aria-label="Fermer"
+              className="mer-icon-bounce"
+            >
+              <X size={18} strokeWidth={1.5} />
+            </button>
+
+            <p style={styles.cardEyebrow}>Collections Maillots</p>
+            <h3 style={styles.maillotsPanelTitle}>Trouvez votre maillot</h3>
+
+            <input
+              type="text"
+              placeholder="Chercher une équipe (ex : Sénégal, Real Madrid...)"
+              value={maillotSearch}
+              onChange={(e) => setMaillotSearch(e.target.value)}
+              style={styles.maillotsSearch}
+              className="mer-input"
+            />
+
+            <div style={styles.maillotsFilterRow}>
+              {["tous", "Domicile", "Extérieur", "Third"].map((v) => (
+                <button
+                  key={v}
+                  onClick={() => setMaillotVersion(v)}
+                  style={{
+                    ...styles.maillotsFilterPill,
+                    ...(maillotVersion === v ? styles.indexPillActive : {}),
+                  }}
+                  className="mer-pill"
+                >
+                  {v === "tous" ? "Toutes versions" : v}
+                </button>
+              ))}
+            </div>
+
+            <div style={styles.maillotsGrid}>
+              {maillots
+                .filter((m) =>
+                  m.equipe.toLowerCase().includes(maillotSearch.trim().toLowerCase())
+                )
+                .filter((m) => maillotVersion === "tous" || m.version === maillotVersion)
+                .map((m) => (
+                  <button
+                    key={m.id}
+                    onClick={() => {
+                      setShowMaillots(false);
+                      setSelected({
+                        name: `Maillot ${m.equipe} — ${m.version}`,
+                        material: m.version,
+                        price: m.price,
+                        image: m.image,
+                        sizes: m.sizes,
+                        available: m.available,
+                        dept: "vetements",
+                      });
+                    }}
+                    style={styles.maillotCard}
+                    className="mer-card"
+                  >
+                    <span style={styles.cardSwatch} className="mer-card-swatch">
+                      <span style={styles.cardSwatchLines} />
+                      <ProductImage src={m.image} alt={m.equipe} IconEl={Shirt} iconSize={26} />
+                      {m.available === false && (
+                        <span style={styles.availBadgeUnavailable}>Indisponible</span>
+                      )}
+                    </span>
+                    <span style={styles.maillotCardName}>{m.equipe}</span>
+                    <span style={styles.maillotCardVersion}>{m.version} · {m.price}</span>
+                  </button>
+                ))}
+            </div>
+
+            {maillots.filter(
+              (m) =>
+                m.equipe.toLowerCase().includes(maillotSearch.trim().toLowerCase()) &&
+                (maillotVersion === "tous" || m.version === maillotVersion)
+            ).length === 0 && (
+              <p style={styles.catalogueStatus}>Aucun maillot ne correspond à votre recherche.</p>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* PRODUCT MODAL */}
       {selected && (
@@ -1057,6 +1163,73 @@ const styles = {
     padding: "36px 32px",
     position: "relative",
     textAlign: "center",
+  },
+  maillotsPanel: {
+    background: colors.surface2,
+    border: `1px solid ${colors.hairline}`,
+    maxWidth: 780,
+    width: "100%",
+    maxHeight: "85vh",
+    overflowY: "auto",
+    padding: "36px 32px",
+    position: "relative",
+    textAlign: "left",
+  },
+  maillotsPanelTitle: {
+    fontFamily: serif,
+    fontWeight: 300,
+    fontSize: 26,
+    margin: "4px 0 20px",
+  },
+  maillotsSearch: {
+    width: "100%",
+    background: colors.surface,
+    border: `1px solid ${colors.hairline}`,
+    color: colors.text,
+    padding: "12px 14px",
+    fontSize: 14,
+    outline: "none",
+    marginBottom: 14,
+  },
+  maillotsFilterRow: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 8,
+    marginBottom: 24,
+  },
+  maillotsFilterPill: {
+    background: colors.surface,
+    border: `1px solid ${colors.hairline}`,
+    color: colors.muted,
+    padding: "8px 14px",
+    fontSize: 12.5,
+    cursor: "pointer",
+  },
+  maillotsGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
+    gap: 14,
+  },
+  maillotCard: {
+    background: colors.surface,
+    border: `1px solid ${colors.hairline}`,
+    padding: 0,
+    cursor: "pointer",
+    textAlign: "left",
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
+  },
+  maillotCardName: {
+    fontFamily: serif,
+    fontSize: 15,
+    padding: "10px 12px 0",
+  },
+  maillotCardVersion: {
+    fontFamily: mono,
+    fontSize: 10.5,
+    color: colors.muted,
+    padding: "4px 12px 12px",
   },
   modalClose: {
     position: "absolute",

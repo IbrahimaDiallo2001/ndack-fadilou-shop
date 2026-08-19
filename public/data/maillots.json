@@ -1,0 +1,8 @@
+{
+  "maillots": [
+    { "id": 1, "equipe": "Sénégal", "version": "Domicile", "price": "Prix sur demande", "image": "/images/maillot-senegal-domicile.webp", "sizes": ["S", "M", "L", "XL", "XXL"], "available": true },
+    { "id": 2, "equipe": "Sénégal", "version": "Extérieur", "price": "Prix sur demande", "image": "/images/maillot-senegal-exterieur.webp", "sizes": ["S", "M", "L", "XL", "XXL"], "available": true },
+    { "id": 3, "equipe": "Real Madrid", "version": "Domicile", "price": "Prix sur demande", "image": "/images/maillot-real-domicile.webp", "sizes": ["S", "M", "L", "XL", "XXL"], "available": true },
+    { "id": 4, "equipe": "Real Madrid", "version": "Extérieur", "price": "Prix sur demande", "image": "/images/maillot-real-exterieur.webp", "sizes": ["S", "M", "L", "XL", "XXL"], "available": true }
+  ]
+}
