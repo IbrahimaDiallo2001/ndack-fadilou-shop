@@ -5,28 +5,30 @@
       "dept": "vetements",
       "name": "T-shirt Étoilé Brodé",
       "material": "Coton, broderies étoilées",
-      "price": "7 000 FCFA",
+      "price": "Prix sur demande",
       "image": "/images/tshirt-etoile-brode.webp",
       "sizes": [
         "S",
         "M",
         "L",
         "XL"
-      ]
+      ],
+      "available": true
     },
     {
       "id": 2,
       "dept": "vetements",
       "name": "T-shirt Essentiel Noir",
       "material": "Coton stretch",
-      "price": "3 000 FCFA",
+      "price": "Prix sur demande",
       "image": "/images/tshirt-essentiel-noir.webp",
       "sizes": [
         "S",
         "M",
         "L",
         "XL"
-      ]
+      ],
+      "available": true
     },
     {
       "id": 3,
@@ -40,7 +42,8 @@
         "M",
         "L",
         "XL"
-      ]
+      ],
+      "available": true
     },
     {
       "id": 4,
@@ -54,7 +57,8 @@
         "M",
         "L",
         "XL"
-      ]
+      ],
+      "available": true
     },
     {
       "id": 5,
@@ -63,7 +67,8 @@
       "material": "Cuir pleine fleur",
       "price": "Prix sur demande",
       "image": "/images/ceinture-facette.webp",
-      "sizes": []
+      "sizes": [],
+      "available": true
     },
     {
       "id": 6,
@@ -72,104 +77,115 @@
       "material": "Twill de soie",
       "price": "Prix sur demande",
       "image": "/images/foulard-ondine.webp",
-      "sizes": []
+      "sizes": [],
+      "available": true
     },
     {
       "id": 7,
       "dept": "accessoires",
       "name": "Caleçon",
       "material": "Coton stretch, lot de 3",
-      "price": "6 000 FCFA",
+      "price": "Prix sur demande",
       "image": "/images/calecon.webp",
-      "sizes": []
+      "sizes": [],
+      "available": true
     },
     {
       "id": 8,
       "dept": "parfums",
       "name": "Eau Fraîche Française",
       "material": "100 ml, eau de parfum",
-      "price": "25 000 FCFA",
+      "price": "Prix sur demande",
       "image": "/images/parfum-ete-francais.webp",
-      "sizes": []
+      "sizes": [],
+      "available": true
     },
     {
       "id": 9,
       "dept": "parfums",
       "name": "Déodorant Sensitive 0%",
       "material": "Spray 150 ml, soin corporel",
-      "price": "2 500 FCFA",
+      "price": "Prix sur demande",
       "image": "/images/deodorant-sensitive.webp",
-      "sizes": []
+      "sizes": [],
+      "available": true
     },
     {
       "id": 10,
       "dept": "parfums",
       "name": "Déodorant Fraîcheur Fleurie",
       "material": "Spray 150 ml, soin corporel",
-      "price": "2 000 FCFA",
+      "price": "Prix sur demande",
       "image": "/images/deodorant-fraicheur.webp",
-      "sizes": []
+      "sizes": [],
+      "available": true
     },
     {
       "id": 11,
       "dept": "parfums",
       "name": "Eau Nocturne",
       "material": "Eau de parfum",
-      "price": "25 000 FCFA",
+      "price": "Prix sur demande",
       "image": "/images/eau-nocturne.webp",
-      "sizes": []
+      "sizes": [],
+      "available": true
     },
     {
       "id": 12,
       "dept": "montres",
       "name": "Montre Argent Ligne Pure",
       "material": "Boîtier acier, bracelet maillons",
-      "price": "15 000 FCFA",
+      "price": "Prix sur demande",
       "image": "/images/montre-argent-pure.webp",
-      "sizes": []
+      "sizes": [],
+      "available": true
     },
     {
       "id": 13,
       "dept": "montres",
       "name": "Montre Filet Noir Duo",
       "material": "Coffret duo, bracelet maille milanaise",
-      "price": "10 000 FCFA",
+      "price": "Prix sur demande",
       "image": "/images/montre-filet-duo.webp",
-      "sizes": []
+      "sizes": [],
+      "available": true
     },
     {
       "id": 14,
       "dept": "montres",
       "name": "Montre Or Élégance",
       "material": "Boîtier plaqué or, chronographe",
-      "price": "20 000 FCFA",
+      "price": "Prix sur demande",
       "image": "/images/montre-or-elegance.webp",
-      "sizes": []
+      "sizes": [],
+      "available": true
     },
     {
       "id": 15,
       "dept": "montres",
       "name": "Montre Chrono Argenté",
       "material": "Cadran blanc, chronographe acier",
-      "price": "20 000 FCFA",
+      "price": "Prix sur demande",
       "image": "/images/montre-chrono-argente.webp",
-      "sizes": []
+      "sizes": [],
+      "available": true
     },
     {
       "id": 16,
       "dept": "montres",
       "name": "Montre Bleu Minéral",
       "material": "Cadran bleu, bracelet cuir",
-      "price": "20 000 FCFA",
+      "price": "Prix sur demande",
       "image": "/images/montre-bleu-mineral.webp",
-      "sizes": []
+      "sizes": [],
+      "available": true
     },
     {
       "id": 17,
       "dept": "chaussures",
       "name": "Derby Cuir Patiné",
       "material": "Cuir patiné, semelle cousue",
-      "price": "20 000 FCFA",
+      "price": "Prix sur demande",
       "image": "/images/derby-patine.webp",
       "sizes": [
         "39",
@@ -179,14 +195,15 @@
         "43",
         "44",
         "45"
-      ]
+      ],
+      "available": true
     },
     {
       "id": 18,
       "dept": "chaussures",
       "name": "Mocassin Lisière",
       "material": "Veau velours",
-      "price": "25 000 FCFA",
+      "price": "340 €",
       "image": "/images/mocassin-lisiere.webp",
       "sizes": [
         "39",
@@ -196,14 +213,15 @@
         "43",
         "44",
         "45"
-      ]
+      ],
+      "available": true
     },
     {
       "id": 19,
       "dept": "chaussures",
       "name": "Bottine Traverse",
       "material": "Cuir ciré",
-      "price": "15 000 FCFA",
+      "price": "420 €",
       "image": "/images/bottine-traverse.webp",
       "sizes": [
         "39",
@@ -213,34 +231,38 @@
         "43",
         "44",
         "45"
-      ]
+      ],
+      "available": true
     },
     {
       "id": 20,
       "dept": "lunettes",
       "name": "Lunettes Horizon",
       "material": "Acétate écaille",
-      "price": "15 000 FCFA",
+      "price": "260 €",
       "image": "/images/lunettes-horizon.webp",
-      "sizes": []
+      "sizes": [],
+      "available": true
     },
     {
       "id": 21,
       "dept": "lunettes",
       "name": "Solaire Fadilou",
       "material": "Verres dégradés",
-      "price": "10 000 FCFA",
+      "price": "Prix sur demande",
       "image": "/images/solaire-fadilou.webp",
-      "sizes": []
+      "sizes": [],
+      "available": true
     },
     {
       "id": 22,
       "dept": "lunettes",
       "name": "Lunettes Fil",
       "material": "Monture dorée, verres teintés",
-      "price": "15 000 FCFA",
+      "price": "Prix sur demande",
       "image": "/images/lunettes-fil.webp",
-      "sizes": []
+      "sizes": [],
+      "available": true
     }
   ]
 }

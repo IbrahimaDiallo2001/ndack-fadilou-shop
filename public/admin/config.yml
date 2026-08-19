@@ -56,6 +56,7 @@ collections:
               - { label: "Matière / détail", name: "material", widget: "string" }
               - { label: "Prix", name: "price", widget: "string", hint: "Ex : 45 000 FCFA, ou « Prix sur demande »" }
               - { label: "Photo", name: "image", widget: "image", choose_url: false, hint: "Formats recommandés : JPG, PNG ou WEBP. Sur iPhone, si la photo ne s'affiche pas après l'ajout, ouvrez Réglages > Appareil photo > Formats et choisissez « Le plus compatible »." }
+              - { label: "Disponible ?", name: "available", widget: "boolean", default: true, hint: "Décochez si l'article est en rupture de stock — les visiteurs verront « Indisponible » sur la fiche." }
               - label: "Tailles / pointures (laisser vide si non applicable)"
                 name: "sizes"
                 widget: "list"

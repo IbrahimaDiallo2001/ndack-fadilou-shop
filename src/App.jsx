@@ -300,6 +300,9 @@ export default function ElFadilouShop() {
                     <span style={styles.cardSwatch} className="mer-card-swatch">
                       <span style={styles.cardSwatchLines} />
                       <ProductImage src={p.image} alt={p.name} IconEl={IconEl} iconSize={30} />
+                      {p.available === false && (
+                        <span style={styles.availBadgeUnavailable}>Indisponible</span>
+                      )}
                       <span style={styles.cardOverlay} className="mer-card-overlay">
                         Voir la pièce <ArrowRight size={13} strokeWidth={1.5} />
                       </span>
@@ -311,6 +314,9 @@ export default function ElFadilouShop() {
                         <span style={styles.cardMaterial}>{p.material}</span>
                         <span style={styles.cardPrice} className="mer-card-price">{p.price}</span>
                       </span>
+                      {p.available !== false && (
+                        <span style={styles.availTagAvailable}>Disponible</span>
+                      )}
                     </span>
                   </span>
                 </Reveal>
@@ -429,6 +435,14 @@ export default function ElFadilouShop() {
             <h3 style={styles.modalName}>{selected.name}</h3>
             <p style={styles.modalMaterial}>{selected.material}</p>
             <p style={styles.modalPrice}>{selected.price}</p>
+            <p
+              style={{
+                ...styles.modalAvailability,
+                color: selected.available === false ? colors.wine : colors.bronze,
+              }}
+            >
+              {selected.available === false ? "Indisponible" : "Disponible"}
+            </p>
 
             {selected.sizes && (
               <div style={styles.sizeBlock}>
@@ -456,15 +470,18 @@ export default function ElFadilouShop() {
 
             <a
               href={`https://wa.me/221784655369?text=${encodeURIComponent(
-                `Bonjour, je suis intéressé(e) par : ${selected.name} (${selected.price})` +
-                  (selected.sizes ? ` — Taille ${selectedSize || "à préciser"}` : "")
+                selected.available === false
+                  ? `Bonjour, l'article "${selected.name}" est indiqué indisponible — pouvez-vous me prévenir quand il revient ?`
+                  : `Bonjour, je suis intéressé(e) par : ${selected.name} (${selected.price})` +
+                    (selected.sizes ? ` — Taille ${selectedSize || "à préciser"}` : "")
               )}`}
               target="_blank"
               rel="noopener noreferrer"
               style={styles.heroCta}
               className="mer-cta"
             >
-              <span>Commander sur WhatsApp</span> <ArrowUpRight size={16} strokeWidth={1.5} className="mer-cta-arrow" />
+              <span>{selected.available === false ? "Être prévenu(e) sur WhatsApp" : "Commander sur WhatsApp"}</span>{" "}
+              <ArrowUpRight size={16} strokeWidth={1.5} className="mer-cta-arrow" />
             </a>
           </div>
         </div>
@@ -897,6 +914,28 @@ const styles = {
     justifyContent: "center",
     overflow: "hidden",
   },
+  availBadgeUnavailable: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+    zIndex: 2,
+    fontFamily: mono,
+    fontSize: 9.5,
+    letterSpacing: "0.06em",
+    textTransform: "uppercase",
+    color: colors.text,
+    background: "var(--scrim)",
+    border: `1px solid ${colors.wine}`,
+    padding: "4px 8px",
+  },
+  availTagAvailable: {
+    display: "block",
+    fontFamily: mono,
+    fontSize: 10,
+    letterSpacing: "0.06em",
+    color: colors.bronze,
+    marginTop: 6,
+  },
   cardSwatchLines: {
     position: "absolute",
     inset: 0,
@@ -1042,7 +1081,14 @@ const styles = {
   },
   modalName: { fontFamily: serif, fontSize: 24, fontWeight: 400, margin: "6px 0 8px" },
   modalMaterial: { fontSize: 13.5, color: colors.muted, margin: "0 0 14px" },
-  modalPrice: { fontFamily: mono, fontSize: 16, margin: "0 0 24px" },
+  modalPrice: { fontFamily: mono, fontSize: 16, margin: "0 0 12px" },
+  modalAvailability: {
+    fontFamily: mono,
+    fontSize: 11,
+    letterSpacing: "0.06em",
+    textTransform: "uppercase",
+    margin: "0 0 22px",
+  },
   sizeBlock: { marginBottom: 24 },
   sizeLabel: {
     fontFamily: mono,
