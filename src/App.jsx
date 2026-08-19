@@ -12,6 +12,8 @@ import {
   Mail,
   AtSign,
   MessageCircle,
+  Sun,
+  Moon,
 } from "lucide-react";
 
 const DEPARTMENTS = [
@@ -41,7 +43,7 @@ function deptOf(id) {
 function ProductImage({ src, alt, IconEl, iconSize }) {
   const [failed, setFailed] = useState(false);
   if (!src || failed) {
-    return <IconEl size={iconSize} strokeWidth={1} className="mer-card-icon" color="rgba(237,230,218,0.55)" />;
+    return <IconEl size={iconSize} strokeWidth={1} className="mer-card-icon" color="var(--icon-fallback)" />;
   }
   return (
     <img
@@ -94,8 +96,37 @@ export default function ElFadilouShop() {
   const [selected, setSelected] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const [subscribed, setSubscribed] = useState(false);
+  const [newsletterError, setNewsletterError] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [theme, setTheme] = useState("dark");
   const heroRef = useRef(null);
+
+  // Au premier chargement : préférence déjà enregistrée, sinon préférence système
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem("nfs-theme");
+      if (saved === "dark" || saved === "light") {
+        setTheme(saved);
+        return;
+      }
+    } catch (e) {
+      /* stockage indisponible, on garde la valeur par défaut */
+    }
+    const prefersLight = window.matchMedia?.("(prefers-color-scheme: light)").matches;
+    if (prefersLight) setTheme("light");
+  }, []);
+
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      const next = prev === "dark" ? "light" : "dark";
+      try {
+        window.localStorage.setItem("nfs-theme", next);
+      } catch (e) {
+        /* stockage indisponible, le choix ne sera pas mémorisé */
+      }
+      return next;
+    });
+  };
 
   useEffect(() => {
     fetch("/data/products.json")
@@ -136,19 +167,49 @@ export default function ElFadilouShop() {
     document.getElementById("catalogue")?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleNewsletterSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const body = new URLSearchParams({ "form-name": "newsletter", email }).toString();
+
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body,
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Échec de l'envoi");
+        setSubscribed(true);
+        setNewsletterError(false);
+      })
+      .catch(() => setNewsletterError(true));
+  };
+
   return (
-    <div style={styles.page}>
+    <div style={styles.page} data-theme={theme}>
       <style>{css}</style>
 
       {/* HEADER */}
       <header style={{ ...styles.header, ...(scrolled ? styles.headerScrolled : {}) }}>
         <div style={styles.headerInner} className="mer-header-inner">
           <span style={styles.logo}>NDACK FADILOU SHOP</span>
-          <nav style={styles.nav} className="mer-nav-hide">
-            <a href="#catalogue" style={styles.navLink} className="mer-link mer-underline">Catalogue</a>
-            <a href="#maison" style={styles.navLink} className="mer-link mer-underline">La Maison</a>
-            <a href="#contact" style={styles.navLink} className="mer-link mer-underline">Contact</a>
-          </nav>
+          <div style={styles.headerRight}>
+            <nav style={styles.nav} className="mer-nav-hide">
+              <a href="#catalogue" style={styles.navLink} className="mer-link mer-underline">Catalogue</a>
+              <a href="#maison" style={styles.navLink} className="mer-link mer-underline">La Maison</a>
+              <a href="#contact" style={styles.navLink} className="mer-link mer-underline">Contact</a>
+            </nav>
+            <button
+              onClick={toggleTheme}
+              style={styles.themeToggle}
+              className="mer-theme-toggle"
+              aria-label={theme === "dark" ? "Passer au thème clair" : "Passer au thème sombre"}
+              title={theme === "dark" ? "Thème clair" : "Thème sombre"}
+            >
+              {theme === "dark" ? <Sun size={16} strokeWidth={1.6} /> : <Moon size={16} strokeWidth={1.6} />}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -293,24 +354,28 @@ export default function ElFadilouShop() {
           <div>
             <p style={styles.footerHeading}>Liste privée</p>
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setSubscribed(true);
-              }}
+              name="newsletter"
+              onSubmit={handleNewsletterSubmit}
               style={styles.footerForm}
             >
               <input
                 required
                 type="email"
+                name="email"
                 placeholder="votre@email.com"
                 style={styles.footerInput}
                 disabled={subscribed}
                 className="mer-input"
               />
               <button type="submit" style={styles.footerButton} className="mer-cta-outline" disabled={subscribed}>
-                {subscribed ? "Merci" : "S'inscrire"}
+                {subscribed ? "Merci" : newsletterError ? "Réessayer" : "S'inscrire"}
               </button>
             </form>
+            {newsletterError && (
+              <p style={styles.newsletterError}>
+                Un souci est survenu, réessayez dans un instant.
+              </p>
+            )}
           </div>
 
           <div>
@@ -422,7 +487,64 @@ export default function ElFadilouShop() {
 const css = `
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,400&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
+  [data-theme="dark"] {
+    --bg: #14100F;
+    --surface: #1D1815;
+    --surface2: #241E1A;
+    --text: #EDE6DA;
+    --muted: #A99C8D;
+    --bronze: #B08A55;
+    --wine: #6E2A3A;
+    --hairline: rgba(237,230,218,0.14);
+    --icon-fallback: rgba(237,230,218,0.55);
+    --hero-mouse-glow: rgba(176,138,85,0.16);
+    --scroll-cue-color: rgba(237,230,218,0.6);
+    --cta-fill: #EDE6DA;
+    --cta-fill-text: #14100F;
+    --bronze-hover: rgba(176,138,85,0.6);
+    --bronze-soft: rgba(176,138,85,0.12);
+    --card-overlay-text: #EDE6DA;
+    --card-overlay-grad: linear-gradient(to top, rgba(20,16,15,0.9), transparent);
+    --scrollbar-thumb: rgba(237,230,218,0.2);
+    --header-bg: rgba(20,16,15,0.7);
+    --header-bg-scrolled: rgba(20,16,15,0.92);
+    --hero-gradient-a: radial-gradient(ellipse 60% 50% at 80% 0%, rgba(110,42,58,0.28), transparent 60%);
+    --hero-gradient-b: radial-gradient(ellipse 50% 40% at 10% 100%, rgba(176,138,85,0.14), transparent 60%);
+    --card-lines: repeating-linear-gradient(115deg, rgba(237,230,218,0.05) 0px, rgba(237,230,218,0.05) 1px, transparent 1px, transparent 14px);
+    --scrim: rgba(10,8,7,0.72);
+    --theme-toggle-track: rgba(237,230,218,0.12);
+  }
+
+  [data-theme="light"] {
+    --bg: #F7F3EC;
+    --surface: #FFFFFF;
+    --surface2: #F0E9DC;
+    --text: #211C17;
+    --muted: #756A5D;
+    --bronze: #9C7A48;
+    --wine: #7C3448;
+    --hairline: rgba(33,28,23,0.12);
+    --icon-fallback: rgba(33,28,23,0.4);
+    --hero-mouse-glow: rgba(156,122,72,0.14);
+    --scroll-cue-color: rgba(33,28,23,0.45);
+    --cta-fill: #211C17;
+    --cta-fill-text: #F7F3EC;
+    --bronze-hover: rgba(156,122,72,0.65);
+    --bronze-soft: rgba(156,122,72,0.14);
+    --card-overlay-text: #F7F3EC;
+    --card-overlay-grad: linear-gradient(to top, rgba(33,28,23,0.82), transparent);
+    --scrollbar-thumb: rgba(33,28,23,0.18);
+    --header-bg: rgba(247,243,236,0.75);
+    --header-bg-scrolled: rgba(247,243,236,0.95);
+    --hero-gradient-a: radial-gradient(ellipse 60% 50% at 80% 0%, rgba(124,52,72,0.14), transparent 60%);
+    --hero-gradient-b: radial-gradient(ellipse 50% 40% at 10% 100%, rgba(156,122,72,0.16), transparent 60%);
+    --card-lines: repeating-linear-gradient(115deg, rgba(33,28,23,0.04) 0px, rgba(33,28,23,0.04) 1px, transparent 1px, transparent 14px);
+    --scrim: rgba(33,28,23,0.55);
+    --theme-toggle-track: rgba(33,28,23,0.1);
+  }
+
   * { box-sizing: border-box; }
+  * { transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; }
 
   /* --- scroll reveal --- */
   .mer-reveal {
@@ -436,11 +558,15 @@ const css = `
   .mer-underline { position: relative; }
   .mer-underline::after {
     content: ""; position: absolute; left: 0; right: 100%; bottom: -4px; height: 1px;
-    background: #B08A55; transition: right 0.3s cubic-bezier(.16,.84,.44,1);
+    background: var(--bronze); transition: right 0.3s cubic-bezier(.16,.84,.44,1);
   }
   .mer-underline:hover::after { right: 0; }
 
   .mer-link { transition: opacity 0.2s ease; opacity: 0.75; }
+
+  .mer-page-root { transition: background-color 0.35s ease, color 0.35s ease; }
+  .mer-theme-toggle { transition: transform 0.4s cubic-bezier(.34,1.56,.64,1), border-color 0.2s ease; }
+  .mer-theme-toggle:hover { border-color: var(--bronze-hover); transform: rotate(-12deg) scale(1.06); }
   .mer-link:hover { opacity: 1; }
 
   /* --- hero --- */
@@ -456,7 +582,7 @@ const css = `
   }
   .mer-hero-glow {
     position: absolute; inset: 0; pointer-events: none; opacity: 0;
-    background: radial-gradient(320px circle at var(--mx,50%) var(--my,50%), rgba(176,138,85,0.16), transparent 70%);
+    background: radial-gradient(320px circle at var(--mx,50%) var(--my,50%), var(--hero-mouse-glow), transparent 70%);
     transition: opacity 0.4s ease;
   }
   .mer-hero:hover .mer-hero-glow { opacity: 1; }
@@ -466,7 +592,7 @@ const css = `
     display: flex; justify-content: center;
   }
   .mer-scroll-cue span {
-    display: block; width: 1px; height: 34px; background: linear-gradient(to bottom, rgba(237,230,218,0.6), transparent);
+    display: block; width: 1px; height: 34px; background: linear-gradient(to bottom, var(--scroll-cue-color), transparent);
     animation: scrollCue 2s ease-in-out infinite;
   }
   @keyframes scrollCue {
@@ -480,38 +606,38 @@ const css = `
   .mer-cta span:first-child { position: relative; z-index: 1; transition: color 0.35s ease; }
   .mer-cta-arrow { position: relative; z-index: 1; transition: color 0.35s ease, transform 0.35s cubic-bezier(.16,.84,.44,1); }
   .mer-cta::before {
-    content: ""; position: absolute; inset: 0; background: #EDE6DA;
+    content: ""; position: absolute; inset: 0; background: var(--cta-fill);
     transform: translateX(-101%); transition: transform 0.4s cubic-bezier(.16,.84,.44,1);
   }
   .mer-cta:hover::before { transform: translateX(0); }
-  .mer-cta:hover span:first-child { color: #14100F; }
-  .mer-cta:hover .mer-cta-arrow { color: #14100F; transform: translate(3px,-3px); }
+  .mer-cta:hover span:first-child { color: var(--cta-fill-text); }
+  .mer-cta:hover .mer-cta-arrow { color: var(--cta-fill-text); transform: translate(3px,-3px); }
 
   .mer-cta-outline { transition: border-color 0.25s ease, color 0.25s ease, transform 0.2s ease; }
-  .mer-cta-outline:hover:not(:disabled) { border-color: #EDE6DA !important; color: #EDE6DA !important; transform: translateY(-1px); }
+  .mer-cta-outline:hover:not(:disabled) { border-color: var(--text) !important; color: var(--text) !important; transform: translateY(-1px); }
 
   /* --- pills --- */
   .mer-pill { transition: border-color 0.25s ease, color 0.25s ease, transform 0.25s cubic-bezier(.16,.84,.44,1); }
-  .mer-pill:hover { border-color: rgba(176,138,85,0.6) !important; transform: translateY(-2px); }
+  .mer-pill:hover { border-color: var(--bronze-hover) !important; transform: translateY(-2px); }
   .mer-pill-icon { transition: transform 0.35s cubic-bezier(.16,.84,.44,1); }
   .mer-pill:hover .mer-pill-icon { transform: rotate(-10deg) scale(1.15); }
 
   .mer-size-pill { transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease; }
-  .mer-size-pill:hover { border-color: rgba(176,138,85,0.6) !important; transform: translateY(-1px); }
+  .mer-size-pill:hover { border-color: var(--bronze-hover) !important; transform: translateY(-1px); }
 
   /* --- product cards --- */
   .mer-card { transition: transform 0.35s cubic-bezier(.16,.84,.44,1); cursor: pointer; }
   .mer-card:hover { transform: translateY(-5px); }
   .mer-card-click { display: flex; flex-direction: column; height: 100%; }
   .mer-card-swatch { transition: background 0.3s ease; }
-  .mer-card:hover .mer-card-swatch { background: #241E1A; }
+  .mer-card:hover .mer-card-swatch { background: var(--surface2); }
   .mer-card-icon { transition: transform 0.45s cubic-bezier(.16,.84,.44,1); }
   .mer-card:hover .mer-card-icon { transform: scale(1.14) rotate(-6deg); }
   .mer-card-overlay {
     position: absolute; left: 0; right: 0; bottom: 0;
     display: flex; align-items: center; gap: 6px; justify-content: center;
     padding: 10px 0; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em;
-    color: #EDE6DA; background: linear-gradient(to top, rgba(20,16,15,0.9), transparent);
+    color: var(--card-overlay-text); background: var(--card-overlay-grad);
     transform: translateY(100%); transition: transform 0.35s cubic-bezier(.16,.84,.44,1);
   }
   .mer-card:hover .mer-card-overlay { transform: translateY(0); }
@@ -521,13 +647,13 @@ const css = `
   }
   .mer-card:hover .mer-card-photo { transform: scale(1.03); filter: grayscale(0.05) contrast(1.05) brightness(0.98); }
   .mer-card-name { transition: color 0.3s ease; }
-  .mer-card:hover .mer-card-name { color: #B08A55; }
+  .mer-card:hover .mer-card-name { color: var(--bronze); }
   .mer-card-price { transition: letter-spacing 0.3s ease; }
   .mer-card:hover .mer-card-price { letter-spacing: 0.03em; }
 
   /* --- footer --- */
   .mer-input { transition: border-color 0.25s ease; }
-  .mer-input:focus { border-color: #B08A55 !important; }
+  .mer-input:focus { border-color: var(--bronze) !important; }
   .mer-icon-bounce { transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), opacity 0.2s ease; }
   .mer-icon-bounce:hover { transform: translateY(-3px) scale(1.12); }
 
@@ -538,7 +664,7 @@ const css = `
   @keyframes modalIn { from { opacity: 0; transform: scale(0.94) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
   .mer-scrollbar::-webkit-scrollbar { height: 4px; }
-  .mer-scrollbar::-webkit-scrollbar-thumb { background: rgba(237,230,218,0.2); }
+  .mer-scrollbar::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); }
 
   a, button { font-family: inherit; }
 
@@ -573,15 +699,16 @@ const serif = "'Fraunces', Georgia, serif";
 const sans = "'Inter', -apple-system, sans-serif";
 const mono = "'IBM Plex Mono', ui-monospace, monospace";
 
+// Ces valeurs pointent vers des variables CSS définies plus bas (thème clair/sombre)
 const colors = {
-  bg: "#14100F",
-  surface: "#1D1815",
-  surface2: "#241E1A",
-  text: "#EDE6DA",
-  muted: "#A99C8D",
-  bronze: "#B08A55",
-  wine: "#6E2A3A",
-  hairline: "rgba(237,230,218,0.14)",
+  bg: "var(--bg)",
+  surface: "var(--surface)",
+  surface2: "var(--surface2)",
+  text: "var(--text)",
+  muted: "var(--muted)",
+  bronze: "var(--bronze)",
+  wine: "var(--wine)",
+  hairline: "var(--hairline)",
 };
 
 const styles = {
@@ -596,13 +723,13 @@ const styles = {
     position: "sticky",
     top: 0,
     zIndex: 20,
-    background: "rgba(20,16,15,0.7)",
+    background: "var(--header-bg)",
     backdropFilter: "blur(6px)",
     borderBottom: `1px solid ${colors.hairline}`,
     transition: "background 0.3s ease, padding 0.3s ease",
   },
   headerScrolled: {
-    background: "rgba(20,16,15,0.92)",
+    background: "var(--header-bg-scrolled)",
   },
   headerInner: {
     maxWidth: 1160,
@@ -620,6 +747,20 @@ const styles = {
     whiteSpace: "nowrap",
   },
   nav: { display: "flex", gap: 28 },
+  headerRight: { display: "flex", alignItems: "center", gap: 20 },
+  themeToggle: {
+    width: 34,
+    height: 34,
+    borderRadius: "50%",
+    border: `1px solid ${colors.hairline}`,
+    background: "var(--theme-toggle-track)",
+    color: colors.text,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    flexShrink: 0,
+  },
   navLink: {
     color: colors.text,
     textDecoration: "none",
@@ -636,14 +777,14 @@ const styles = {
     position: "absolute",
     inset: 0,
     background:
-      "radial-gradient(ellipse 60% 50% at 80% 0%, rgba(110,42,58,0.28), transparent 60%)",
+      "var(--hero-gradient-a)",
     pointerEvents: "none",
   },
   heroGrainB: {
     position: "absolute",
     inset: 0,
     background:
-      "radial-gradient(ellipse 50% 40% at 10% 100%, rgba(176,138,85,0.14), transparent 60%)",
+      "var(--hero-gradient-b)",
     pointerEvents: "none",
   },
   heroGlow: {},
@@ -758,7 +899,7 @@ const styles = {
     position: "absolute",
     inset: 0,
     backgroundImage:
-      "repeating-linear-gradient(115deg, rgba(237,230,218,0.05) 0px, rgba(237,230,218,0.05) 1px, transparent 1px, transparent 14px)",
+      "var(--card-lines)",
   },
   cardOverlay: {},
   cardBody: { padding: "16px 18px 20px", display: "block" },
@@ -821,6 +962,7 @@ const styles = {
   footerText: { fontSize: 13.5, color: colors.muted, lineHeight: 1.6, marginTop: 10, maxWidth: 260 },
   footerHeading: { fontSize: 12, letterSpacing: "0.06em", color: colors.muted, marginBottom: 14 },
   footerForm: { display: "flex", gap: 8 },
+  newsletterError: { fontSize: 12, color: colors.wine, marginTop: 8 },
   footerInput: {
     background: colors.surface,
     border: `1px solid ${colors.hairline}`,
@@ -853,7 +995,7 @@ const styles = {
   overlay: {
     position: "fixed",
     inset: 0,
-    background: "rgba(10,8,7,0.72)",
+    background: "var(--scrim)",
     backdropFilter: "blur(3px)",
     display: "flex",
     alignItems: "center",
@@ -922,7 +1064,7 @@ const styles = {
   sizePillActive: {
     borderColor: colors.bronze,
     color: colors.text,
-    background: "rgba(176,138,85,0.12)",
+    background: "var(--bronze-soft)",
   },
   whatsappFab: {
     position: "fixed",
