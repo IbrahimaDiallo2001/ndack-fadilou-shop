@@ -420,10 +420,12 @@ export default function ElFadilouShop() {
           </div>
         </div>
         <div style={styles.footerBottom}>
-          <span>© {new Date().getFullYear()} Ndack Fadilou Shop</span>
-          <a href="/admin/" style={styles.footerAdminLink} className="mer-link">
-            Espace propriétaire
-          </a>
+          <span style={styles.footerBottomLeft}>
+            <span>© {new Date().getFullYear()} Ndack Fadilou Shop</span>
+            <a href="/admin/" style={styles.footerAdminLink} className="mer-link">
+              Espace propriétaire
+            </a>
+          </span>
         </div>
       </footer>
 
@@ -1134,10 +1136,17 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     paddingTop: 24,
+    paddingBottom: 56,
     fontSize: 11.5,
     color: colors.muted,
     flexWrap: "wrap",
     gap: 8,
+  },
+  footerBottomLeft: {
+    display: "flex",
+    alignItems: "center",
+    gap: 16,
+    flexWrap: "wrap",
   },
   footerAdminLink: {
     color: colors.muted,
