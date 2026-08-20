@@ -33,9 +33,9 @@
     {
       "id": 3,
       "equipe": "Real Madrid",
-      "version": "Domicile",
+      "version": "Extérieur",
       "price": "Prix sur demande",
-      "image": "/images/maillot-real-domicile.webp",
+      "image": "/images/whatsapp-image-2026-08-20-at-14.02.59-1-.jpeg",
       "sizes": [
         "S",
         "M",
@@ -48,9 +48,9 @@
     {
       "id": 4,
       "equipe": "Real Madrid",
-      "version": "Extérieur",
+      "version": "Third",
       "price": "Prix sur demande",
-      "image": "/images/maillot-real-exterieur.webp",
+      "image": "/images/whatsapp-image-2026-08-20-at-14.02.59-2-.jpeg",
       "sizes": [
         "S",
         "M",
@@ -65,7 +65,7 @@
       "equipe": "FC Barcelone",
       "version": "Domicile",
       "price": "Prix sur demande",
-      "image": "/images/maillot-fc-barcelone-domicile.webp",
+      "image": "/images/whatsapp-image-2026-08-20-at-14.02.59.jpeg",
       "sizes": [
         "S",
         "M",
@@ -125,7 +125,7 @@
       "equipe": "Paris Saint-Germain",
       "version": "Domicile",
       "price": "Prix sur demande",
-      "image": "/images/maillot-paris-saint-germain-domicile.webp",
+      "image": "/images/whatsapp-image-2026-08-20-at-14.03.00-1-.jpeg",
       "sizes": [
         "S",
         "M",
@@ -140,7 +140,7 @@
       "equipe": "Paris Saint-Germain",
       "version": "Extérieur",
       "price": "Prix sur demande",
-      "image": "/images/maillot-paris-saint-germain-exterieur.webp",
+      "image": "/images/whatsapp-image-2026-08-20-at-14.03.00-2-.jpeg",
       "sizes": [
         "S",
         "M",
@@ -155,7 +155,7 @@
       "equipe": "Olympique de Marseille",
       "version": "Domicile",
       "price": "Prix sur demande",
-      "image": "/images/maillot-olympique-de-marseille-domicile.webp",
+      "image": "/images/whatsapp-image-2026-08-20-at-14.03.00-3-.jpeg",
       "sizes": [
         "S",
         "M",
@@ -170,7 +170,7 @@
       "equipe": "Olympique de Marseille",
       "version": "Extérieur",
       "price": "Prix sur demande",
-      "image": "/images/maillot-olympique-de-marseille-exterieur.webp",
+      "image": "/images/whatsapp-image-2026-08-20-at-14.03.00-4-.jpeg",
       "sizes": [
         "S",
         "M",
@@ -185,7 +185,7 @@
       "equipe": "Manchester City",
       "version": "Domicile",
       "price": "Prix sur demande",
-      "image": "/images/maillot-manchester-city-domicile.webp",
+      "image": "/images/whatsapp-image-2026-08-20-at-14.03.00-8-.jpeg",
       "sizes": [
         "S",
         "M",
@@ -200,7 +200,7 @@
       "equipe": "Manchester City",
       "version": "Extérieur",
       "price": "Prix sur demande",
-      "image": "/images/maillot-manchester-city-exterieur.webp",
+      "image": "/images/whatsapp-image-2026-08-20-at-14.03.00-7-.jpeg",
       "sizes": [
         "S",
         "M",
@@ -215,7 +215,7 @@
       "equipe": "Manchester United",
       "version": "Domicile",
       "price": "Prix sur demande",
-      "image": "/images/maillot-manchester-united-domicile.webp",
+      "image": "/images/whatsapp-image-2026-08-20-at-14.03.00-11-.jpeg",
       "sizes": [
         "S",
         "M",
@@ -230,7 +230,7 @@
       "equipe": "Manchester United",
       "version": "Extérieur",
       "price": "Prix sur demande",
-      "image": "/images/maillot-manchester-united-exterieur.webp",
+      "image": "/images/whatsapp-image-2026-08-20-at-14.03.00-9-.jpeg",
       "sizes": [
         "S",
         "M",
@@ -245,7 +245,7 @@
       "equipe": "Borussia Dortmund",
       "version": "Domicile",
       "price": "Prix sur demande",
-      "image": "/images/maillot-borussia-dortmund-domicile.webp",
+      "image": "/images/whatsapp-image-2026-08-20-at-14.03.00-5-.jpeg",
       "sizes": [
         "S",
         "M",
@@ -260,7 +260,7 @@
       "equipe": "Borussia Dortmund",
       "version": "Extérieur",
       "price": "Prix sur demande",
-      "image": "/images/maillot-borussia-dortmund-exterieur.webp",
+      "image": "/images/whatsapp-image-2026-08-20-at-14.03.00-6-.jpeg",
       "sizes": [
         "S",
         "M",
@@ -275,7 +275,7 @@
       "equipe": "Liverpool",
       "version": "Domicile",
       "price": "Prix sur demande",
-      "image": "/images/maillot-liverpool-domicile.webp",
+      "image": "/images/whatsapp-image-2026-08-20-at-14.03.00.jpeg",
       "sizes": [
         "S",
         "M",
@@ -290,7 +290,7 @@
       "equipe": "Liverpool",
       "version": "Extérieur",
       "price": "Prix sur demande",
-      "image": "/images/maillot-liverpool-exterieur.webp",
+      "image": "/images/whatsapp-image-2026-08-20-at-14.02.59-3-.jpeg",
       "sizes": [
         "S",
         "M",
