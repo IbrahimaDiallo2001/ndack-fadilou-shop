@@ -40,7 +40,7 @@ function deptOf(id) {
 }
 
 /** Shows the product photo if it loads; otherwise falls back to the department icon. */
-function ProductImage({ src, alt, IconEl, iconSize }) {
+function ProductImage({ src, alt, IconEl, iconSize, fit = "contain", pad = 22 }) {
   const [failed, setFailed] = useState(false);
   if (!src || failed) {
     return <IconEl size={iconSize} strokeWidth={1} className="mer-card-icon" color="var(--icon-fallback)" />;
@@ -52,7 +52,7 @@ function ProductImage({ src, alt, IconEl, iconSize }) {
       loading="lazy"
       onError={() => setFailed(true)}
       className="mer-card-photo"
-      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain", padding: 22 }}
+      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: fit, padding: pad }}
     />
   );
 }
@@ -500,7 +500,7 @@ export default function ElFadilouShop() {
                   >
                     <span style={styles.cardSwatch} className="mer-card-swatch">
                       <span style={styles.cardSwatchLines} />
-                      <ProductImage src={m.image} alt={m.equipe} IconEl={Shirt} iconSize={26} />
+                      <ProductImage src={m.image} alt={m.equipe} IconEl={Shirt} iconSize={34} fit="cover" pad={2} />
                       {m.available === false && (
                         <span style={styles.availBadgeUnavailable}>Indisponible</span>
                       )}
@@ -1232,6 +1232,7 @@ const styles = {
   maillotCardName: {
     fontFamily: serif,
     fontSize: 15,
+    color: colors.bronze,
     padding: "10px 12px 0",
   },
   maillotCardVersion: {
